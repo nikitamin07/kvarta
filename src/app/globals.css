@@ -25,6 +25,8 @@
   --paper-muted: #5e5a52;
   --paper-soft: #4a463e;
   --paper-hand: #8a5a22;
+  --paper-dots: rgb(37 34 28 / 0.4);
+  --bean: #6b4a26;
   --error: #ff9b8f;
   --ok: #7fd39a;
   --msg-bg: #21402d;
@@ -35,6 +37,7 @@
   --ink-wash: rgb(236 232 223 / 0.08);
   --tape: rgb(224 180 122 / 0.55);
   --shadow: 0 18px 40px rgb(0 0 0 / 0.35);
+  --shadow-paper: 0 18px 40px rgb(0 0 0 / 0.3);
 
   --font-serif: var(--font-literata), Georgia, serif;
   --font-sans: var(--font-commissioner), system-ui, sans-serif;

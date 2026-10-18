@@ -20,3 +20,7 @@ export function deliveryNote(total: number): string {
   const left = FREE_DELIVERY_FROM - total;
   return left > 0 ? `До бесплатной доставки ещё ${left} BYN` : "Доставка бесплатно";
 }
+
+export function lineLabel(line: OrderLine): string {
+  return line.qty > 1 ? `${line.product.short} × ${line.qty}` : line.product.short;
+}

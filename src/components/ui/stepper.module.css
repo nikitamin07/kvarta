@@ -1,0 +1,30 @@
+.step {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.step button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink);
+  font: 500 22px/1 var(--font-sans);
+  cursor: pointer;
+}
+
+.step button:hover {
+  background: var(--line);
+}
+
+.step output {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

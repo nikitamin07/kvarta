@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { plural } from "./format";
-import { clampQty, deliveryNote, priceOrder } from "./order";
+import { clampQty, deliveryNote, lineLabel, priceOrder } from "./order";
 
 describe("priceOrder", () => {
   it("считает сумму по ценам каталога в порядке каталога", () => {
@@ -42,6 +42,16 @@ describe("deliveryNote", () => {
     expect(deliveryNote(29)).toBe("До бесплатной доставки ещё 21 BYN");
     expect(deliveryNote(50)).toBe("Доставка бесплатно");
     expect(deliveryNote(64)).toBe("Доставка бесплатно");
+  });
+});
+
+describe("lineLabel", () => {
+  it("пишет количество только от двух пачек", () => {
+    const { lines } = priceOrder([
+      { id: "col", qty: 1 },
+      { id: "eth", qty: 3 },
+    ]);
+    expect(lines.map(lineLabel)).toEqual(["Эфиопия × 3", "Колумбия"]);
   });
 });
 
