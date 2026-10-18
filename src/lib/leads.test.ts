@@ -16,7 +16,7 @@ function lead(phone: string, patch: Partial<LeadRecord> = {}): LeadRecord {
     name: "Аня",
     phone,
     interest: "order",
-    items: [{ id: "eth", qty: 2, price: 32, sum: 64 }],
+    items: [{ id: "eth", name: "Эфиопия Иргачеффе", qty: 2, price: 32, sum: 64 }],
     totalByn: 64,
     question: null,
     comment: "помол под турку",
@@ -68,7 +68,9 @@ describe("insertLead", () => {
       landing_page: "/?utm_source=instagram",
       referrer: "https://l.instagram.com/",
     });
-    expect(row.items).toEqual([{ id: "eth", qty: 2, price: 32, sum: 64 }]);
+    expect(row.items).toEqual([
+      { id: "eth", name: "Эфиопия Иргачеффе", qty: 2, price: 32, sum: 64 },
+    ]);
   });
 
   it("повтор номера в течение 10 минут не создаёт заявку", async () => {
