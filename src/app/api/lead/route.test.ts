@@ -111,17 +111,43 @@ describe("POST /api/lead", () => {
     expect(big.status).toBe(413);
   });
 
+  // время считаем внутри теста
   it.each([
-    ["заполнена ловушка", { website: "http://spam.example", startedAt: Date.now() - 10_000 }],
-    ["форма отправлена за секунду", { website: "", startedAt: Date.now() - 1000 }],
-    ["нет отметки времени", { website: "" }],
-  ])("бот (%s): 200, но ничего не пишем", async (_, trap) => {
+    ["заполнена ловушка", "http://spam.example", 10_000],
+    ["форма отправлена за секунду", "", 1000],
+    ["нет отметки времени", "", null],
+  ])("бот (%s): 200, но ничего не пишем", async (_, website, age) => {
     const phone = randomPhone();
+    const trap = age === null ? { website } : { website, startedAt: Date.now() - age };
     const res = await post({ ...trap, name: "Bot", phone, interest: "question", question: "buy" });
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, duplicate: false });
     expect(await rowsFor(phone)).toHaveLength(0);
     expect(afterTasks).toHaveLength(0);
+  });
+
+  it("413 по заявленной длине и по потоку без длины, тело целиком не читаем", async () => {
+    const declared = new Request("http://localhost/api/lead", {
+      method: "POST",
+      headers: { "Content-Length": "999999" },
+      body: "{}",
+    });
+    expect((await POST(declared)).status).toBe(413);
+
+    let pulled = 0;
+    const endless = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulled += 1;
+        controller.enqueue(new Uint8Array(4096));
+      },
+    });
+    const streamed = new Request("http://localhost/api/lead", {
+      method: "POST",
+      body: endless,
+      duplex: "half",
+    } as RequestInit);
+    expect((await POST(streamed)).status).toBe(413);
+    expect(pulled).toBeLessThan(10);
   });
 
   it("кириллица в utf8 сохраняется как есть", async () => {

@@ -15,9 +15,35 @@ function fail(status: number, message: string, errors: FieldErrors = {}) {
   return reply(status, { message, errors });
 }
 
+// читаем не больше лимита
+async function readBody(request: Request): Promise<Uint8Array | null> {
+  if (Number(request.headers.get("content-length") ?? 0) > MAX_BODY) return null;
+  if (!request.body) return new Uint8Array();
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BODY) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return bytes;
+}
+
 export async function POST(request: Request) {
-  const bytes = await request.arrayBuffer();
-  if (bytes.byteLength > MAX_BODY) return fail(413, "Заявка слишком большая");
+  const bytes = await readBody(request);
+  if (!bytes) return fail(413, "Заявка слишком большая");
 
   let body: unknown;
   try {
