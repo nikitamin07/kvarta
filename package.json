@@ -13,9 +13,11 @@
     "check": "node scripts/check-code.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "verify": "npm run format:check && npm run lint && npm run check && npm run typecheck && npm run test && npm run build"
+    "verify": "npm run format:check && npm run lint && npm run check && npm run typecheck && npm run test && npm run build",
+    "db:migrate": "node --env-file-if-exists=.env.local scripts/migrate.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "1.2.0",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0"
