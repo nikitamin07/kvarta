@@ -1,8 +1,7 @@
 export default function Home() {
   return (
-    <main>
-      <h1>Кварта</h1>
-      <p>Жарим кофе так, как хотели бы пить его сами.</p>
-    </main>
+    <section className="wrap sec" aria-labelledby="k-hero-h">
+      <h1 id="k-hero-h">Жарим кофе так, как хотели бы пить его сами</h1>
+    </section>
   );
 }
