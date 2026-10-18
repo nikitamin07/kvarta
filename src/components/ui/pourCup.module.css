@@ -1,0 +1,258 @@
+.cup {
+  width: 100%;
+  max-width: 340px;
+}
+
+.line {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cupBody {
+  fill: var(--cup-body, var(--bg));
+}
+
+.fill {
+  transform: translateY(80px);
+}
+
+.coffee {
+  fill: var(--coffee);
+}
+
+.crema {
+  fill: var(--crema);
+}
+
+.wave {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.stream {
+  fill: none;
+  stroke: var(--coffee);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+
+.drop {
+  fill: var(--coffee-drop);
+  opacity: 0;
+}
+
+.steam {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  opacity: 0;
+}
+
+.copper1 {
+  stop-color: var(--copper-light);
+}
+
+.copper2 {
+  stop-color: var(--copper);
+}
+
+.copper3 {
+  stop-color: var(--copper-dark);
+}
+
+.body {
+  stroke: var(--copper-line);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+
+.shine {
+  fill: none;
+  stroke: var(--copper-shine);
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.75;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--copper-line);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.handle {
+  stroke: var(--turka-handle);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.ferrule {
+  fill: var(--copper-ferrule);
+  stroke: var(--copper-line);
+  stroke-width: 1.5;
+}
+
+.play .turka {
+  animation: tz 4.8s 0.1s cubic-bezier(0.45, 0, 0.3, 1) forwards;
+}
+
+.play .stream {
+  animation: pour 2.3s 0.85s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+}
+
+.play .fill {
+  animation: rise 1.9s 1.3s cubic-bezier(0.25, 0.6, 0.35, 1) forwards;
+}
+
+.play .wave {
+  animation:
+    slosh 0.5s 1.3s ease-in-out 4 alternate,
+    settle 0.8s 3.3s ease-out forwards;
+}
+
+.play .d1 {
+  animation: drop1 0.7s 1.4s ease-out forwards;
+}
+
+.play .d2 {
+  animation: drop2 0.7s 1.5s ease-out forwards;
+}
+
+.play .d3 {
+  animation: drop3 0.6s 1.8s ease-out forwards;
+}
+
+.play .steam {
+  animation: steam 1.6s 3.3s ease-out forwards;
+}
+
+.play .s2 {
+  animation-delay: 3.55s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transform: translateY(28px);
+  }
+
+  .wave {
+    transform: scaleY(0.25);
+  }
+
+  .steam {
+    opacity: 0.85;
+    stroke-dashoffset: 0;
+  }
+
+  .turka {
+    transform: translate(88px, 104px);
+  }
+}
+
+@keyframes tz {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  16%,
+  66% {
+    transform: translate(0, 0) rotate(-58deg);
+  }
+  76% {
+    transform: translate(0, -6px) rotate(0);
+  }
+  100% {
+    transform: translate(88px, 104px) rotate(0);
+  }
+}
+
+@keyframes pour {
+  22%,
+  82% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes rise {
+  to {
+    transform: translateY(28px);
+  }
+}
+
+@keyframes slosh {
+  from {
+    transform: translateX(-6px) scaleY(1.2);
+  }
+  to {
+    transform: translateX(6px) scaleY(0.7);
+  }
+}
+
+@keyframes settle {
+  to {
+    transform: translateX(0) scaleY(0.25);
+  }
+}
+
+@keyframes drop1 {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-14px, -22px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-20px, 4px);
+  }
+}
+
+@keyframes drop2 {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translate(12px, -26px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(18px, 2px);
+  }
+}
+
+@keyframes drop3 {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translate(4px, -16px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(6px, 4px);
+  }
+}
+
+@keyframes steam {
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.85;
+    stroke-dashoffset: 0;
+  }
+}

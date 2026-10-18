@@ -1,0 +1,31 @@
+.grid {
+  display: grid;
+  gap: 32px;
+  --cup-body: var(--green-800);
+}
+
+.lede {
+  margin-top: var(--gap-heading);
+  color: var(--muted);
+}
+
+.cup {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1.3fr;
+    align-items: start;
+    gap: 64px;
+  }
+
+  .lede {
+    max-width: 34ch;
+  }
+
+  .cup {
+    display: block;
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,282 @@
+.form {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: clamp(16px, 2vw, 24px);
+  border-radius: 20px;
+  background: var(--bg);
+}
+
+.fold {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s,
+    visibility 0.4s;
+}
+
+.fold[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s 0.12s,
+    visibility 0s;
+}
+
+/* запас под рамку фокуса */
+.foldIn {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  margin: -6px;
+  padding: 6px;
+  overflow: hidden;
+}
+
+.progress {
+  display: flex;
+  gap: 8px;
+}
+
+.progress i {
+  display: block;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 0.4s;
+}
+
+.progress .on {
+  background: var(--accent);
+}
+
+.stepL {
+  margin-top: -8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.opt {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 4px 6px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 15px/1.2 var(--font-sans);
+  text-align: center;
+  cursor: pointer;
+}
+
+.opt[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.panel {
+  padding: 2px 12px;
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 0 4px;
+}
+
+.cell {
+  display: grid;
+  align-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.cell b {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rs {
+  display: block;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.cell .cellStep {
+  justify-content: space-between;
+  background: var(--surface2);
+}
+
+.sum {
+  display: grid;
+  gap: 2px;
+  padding: 8px 0 4px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+}
+
+.sum small {
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.check {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  column-gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.check:last-child {
+  border-bottom: 0;
+}
+
+.check input {
+  grid-row: span 2;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.check .rs {
+  font-size: 15px;
+}
+
+.check.dis {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.lbl {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.inp {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 17px var(--font-sans);
+}
+
+.inp::placeholder {
+  color: var(--placeholder);
+}
+
+textarea.inp {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.inp:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.inp.bad {
+  border-color: var(--error);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.hint.bad,
+.err {
+  color: var(--error);
+}
+
+.err {
+  font-size: 15px;
+}
+
+.msg {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--msg-bg);
+  color: var(--msg-ink);
+  font-size: 16px;
+}
+
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.back {
+  min-height: 50px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 500 16px var(--font-sans);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.consent {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .sum {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+}

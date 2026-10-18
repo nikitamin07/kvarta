@@ -9,7 +9,7 @@ import styles from "./build.module.css";
 const BEANS = [1, 2, 3, 4, 5];
 
 export function BuildOrder({ roastDay }: { roastDay: string }) {
-  const { qty, changeQty } = useOrder();
+  const { qty, changeQty, toForm } = useOrder();
   const { lines, total } = priceOrder(CATALOG.map((p) => ({ id: p.id, qty: qty[p.id] })));
 
   return (
@@ -59,7 +59,7 @@ export function BuildOrder({ roastDay }: { roastDay: string }) {
           ))}
         </div>
         <p className={styles.free}>{deliveryNote(total)}</p>
-        <a className={`btn ${styles.toForm}`} href="#k-lead">
+        <a className={`btn ${styles.toForm}`} href="#k-lead" onClick={toForm}>
           Перенести в заявку
         </a>
       </aside>

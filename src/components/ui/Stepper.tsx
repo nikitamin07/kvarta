@@ -1,10 +1,10 @@
 import styles from "./stepper.module.css";
 
-type Props = { name: string; qty: number; onChange: (delta: number) => void };
+type Props = { name: string; qty: number; onChange: (delta: number) => void; className?: string };
 
-export function Stepper({ name, qty, onChange }: Props) {
+export function Stepper({ name, qty, onChange, className }: Props) {
   return (
-    <div className={styles.step}>
+    <div className={className ? `${styles.step} ${className}` : styles.step}>
       <button type="button" onClick={() => onChange(-1)} aria-label={`Убрать ${name}`}>
         −
       </button>

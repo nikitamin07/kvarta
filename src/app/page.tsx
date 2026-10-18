@@ -1,5 +1,6 @@
 import { connection } from "next/server";
 import { Build } from "@/components/sections/Build";
+import { Lead } from "@/components/sections/Lead";
 import { OrderProvider } from "@/context/OrderProvider";
 import { formatDay, minskNow, roastWeek } from "@/lib/schedule";
 
@@ -12,6 +13,7 @@ export default async function Home() {
         <h1 id="k-hero-h">Жарим кофе так, как хотели бы пить его сами</h1>
       </section>
       <Build roastDay={formatDay(week.roast)} />
+      <Lead />
     </OrderProvider>
   );
 }
