@@ -19,8 +19,10 @@ export const test = base.extend<{ consoleProblems: string[] }>({
 
 export { expect };
 
-export async function expectNoA11yViolations(page: Page) {
-  const { violations } = await new AxeBuilder({ page }).analyze();
+export async function expectNoA11yViolations(page: Page, exclude: string[] = []) {
+  const builder = new AxeBuilder({ page });
+  for (const selector of exclude) builder.exclude(selector);
+  const { violations } = await builder.analyze();
   const summary = violations.map((v) => `${v.id} ${v.help} (${v.nodes.length})`);
   expect(summary, "axe без нарушений").toEqual([]);
 }

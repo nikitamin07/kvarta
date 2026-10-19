@@ -99,6 +99,15 @@
   font: 600 15px/1.2 var(--font-sans);
   text-align: center;
   cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.opt[aria-pressed="false"]:hover {
+  border-color: var(--ink-outline);
+  background: var(--surface2);
 }
 
 .opt[aria-pressed="true"] {
@@ -147,6 +156,11 @@
 .cell .cellStep {
   justify-content: space-between;
   background: var(--surface2);
+}
+
+/* фон светлее, чем в секции заказа */
+.cell .cellStep button:hover {
+  background: var(--ink-wash-strong);
 }
 
 .sum {

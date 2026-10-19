@@ -56,3 +56,21 @@ test.describe("анимация при прокрутке", () => {
     expect(await shift(page)).toBe("none");
   });
 });
+
+test("якорные ссылки прокручивают плавно", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "Собрать заказ" }).click();
+  await page.waitForTimeout(80);
+  const mid = await page.evaluate(() => scrollY);
+  const target = await page
+    .locator("#k-build")
+    .evaluate(
+      (el) =>
+        el.getBoundingClientRect().top +
+        scrollY -
+        parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop),
+    );
+  expect(mid).toBeGreaterThan(0);
+  expect(mid).toBeLessThan(target - 5);
+  await expect(page.getByRole("heading", { name: "Соберите заказ" })).toBeInViewport();
+});

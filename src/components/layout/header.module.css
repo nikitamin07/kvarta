@@ -4,7 +4,6 @@
   z-index: 5;
   border-bottom: 1px solid var(--line);
   background: var(--header-bg);
-  backdrop-filter: blur(8px);
 }
 
 .inner {
@@ -15,9 +14,7 @@
 }
 
 .logo {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+  position: relative;
   color: var(--ink);
   font-family: var(--font-serif);
   font-size: 26px;
@@ -29,10 +26,15 @@
   color: var(--ink);
 }
 
+/* заходит на конец слова */
 .tagline {
-  display: none;
-  font-size: 20px;
-  rotate: -4deg;
+  position: absolute;
+  top: 64%;
+  left: 38%;
+  font-size: 17px;
+  line-height: 1;
+  white-space: nowrap;
+  rotate: -6deg;
 }
 
 .nav {
@@ -45,6 +47,7 @@
   color: var(--ink);
   text-decoration: none;
   opacity: 0.8;
+  transition: opacity 0.15s;
 }
 
 .nav a:hover {
@@ -60,8 +63,8 @@
 }
 
 @media (min-width: 576px) {
-  .tagline {
-    display: inline;
+  .header {
+    backdrop-filter: blur(8px);
   }
 }
 @media (min-width: 900px) {

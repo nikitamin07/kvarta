@@ -11,7 +11,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={`wrap ${styles.inner}`}>
         <a className={styles.logo} href="#top">
-          Кварта <span className={`hand ${styles.tagline}`}>жарим по четвергам</span>
+          Кварта <span className={`hand ${styles.tagline}`}>жарим сами</span>
         </a>
         <nav className={styles.nav} aria-label="Разделы">
           {NAV.map((item) => (

@@ -162,16 +162,26 @@ test("блоки формы стоят в ряд и уезжают вбок", as
   await expect.poll(() => shiftX(f.locator("[data-pos]").first())).toBeLessThan(0);
 });
 
+// замер стартует от самого клика
 const heights = (page: Page) =>
-  page.evaluate(async () => {
-    const f = document.querySelector("#k-lead form")!;
-    const h: number[] = [];
-    for (let i = 0; i < 14; i++) {
-      h.push(Math.round(f.getBoundingClientRect().height));
-      await new Promise((r) => setTimeout(r, 40));
-    }
-    return h;
-  });
+  page.evaluate(
+    () =>
+      new Promise<number[]>((resolve) => {
+        const f = document.querySelector("#k-lead form")!;
+        const h = [Math.round(f.getBoundingClientRect().height)];
+        f.addEventListener(
+          "click",
+          async () => {
+            for (let i = 0; i < 14; i++) {
+              await new Promise((r) => setTimeout(r, 40));
+              h.push(Math.round(f.getBoundingClientRect().height));
+            }
+            resolve(h);
+          },
+          { once: true, capture: true },
+        );
+      }),
+  );
 
 test("высота формы идёт к новой без провала", async ({ page }) => {
   await page.goto("/#k-lead");
@@ -190,7 +200,7 @@ test("высота формы идёт к новой без провала", asy
       steps.every((d) => d >= -1),
       `${name} ${h.join(" ")}`,
     ).toBe(true);
-    expect((h.at(-1)! - h[0]) * dir).toBeGreaterThan(0);
+    expect((h.at(-1)! - h[0]) * dir, `${name} ${h.join(" ")}`).toBeGreaterThan(0);
   }
 });
 

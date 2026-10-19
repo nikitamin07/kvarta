@@ -45,6 +45,7 @@
   --header-bg: rgb(19 28 24 / 0.92);
   --ink-outline: rgb(236 232 223 / 0.55);
   --ink-wash: rgb(236 232 223 / 0.08);
+  --ink-wash-strong: rgb(236 232 223 / 0.14);
   --tape: rgb(224 180 122 / 0.55);
   --shadow: 0 18px 40px rgb(0 0 0 / 0.35);
   --shadow-paper: 0 18px 40px rgb(0 0 0 / 0.3);
@@ -70,6 +71,7 @@
 
 html {
   scroll-padding-top: calc(var(--header-h) + 12px);
+  scroll-behavior: smooth;
 }
 
 body {

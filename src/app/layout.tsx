@@ -23,7 +23,7 @@ const fontVars = [literata, commissioner, caveat, prata].map((f) => f.variable).
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   await connection();
   return (
-    <html lang="ru" className={fontVars} id="top">
+    <html lang="ru" className={fontVars} id="top" data-scroll-behavior="smooth">
       <body>
         <a className="skip" href="#main">
           К содержимому
