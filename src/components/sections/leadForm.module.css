@@ -185,6 +185,7 @@
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
   cursor: pointer;
+  transition: opacity 0.15s;
 }
 .check:first-child {
   padding-top: 0;
@@ -195,11 +196,52 @@
 }
 
 .check input {
+  position: relative;
   grid-row: span 2;
   width: 22px;
   height: 22px;
   margin: 0;
-  accent-color: var(--accent);
+  border: 1.5px solid var(--ink-outline);
+  border-radius: 7px;
+  background: transparent;
+  cursor: inherit;
+  appearance: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.check input::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent-ink);
+  mask: url("../../assets/check.svg") center / 14px no-repeat;
+  opacity: 0;
+  scale: 0.4;
+  transition:
+    opacity 0.15s,
+    scale 0.2s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.check:not(.dis):hover input {
+  border-color: var(--ink);
+  background: var(--ink-wash);
+}
+
+.check input:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.check:not(.dis):hover input:checked {
+  border-color: var(--accent-hover);
+  background: var(--accent-hover);
+}
+
+.check input:checked::after {
+  opacity: 1;
+  scale: 1;
 }
 
 .check .rs {

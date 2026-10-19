@@ -11,7 +11,7 @@ const SQUIG =
 
 export function Week({ week }: { week: RoastWeek }) {
   return (
-    <section className="sec" aria-labelledby="k-week-h">
+    <section className="sec light" aria-labelledby="k-week-h">
       <div className="wrap">
         <h2 id="k-week-h">Неделя в мастерской</h2>
         <ol className={styles.cal}>

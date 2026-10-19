@@ -59,6 +59,14 @@
   --paper-dash: rgb(37 34 28 / 0.35);
   --paper-wash: rgb(37 34 28 / 0.08);
   --paper-wash-strong: rgb(37 34 28 / 0.15);
+  --map-ground: #e3e6dc;
+  --map-river: #b9d3df;
+  --map-road: #ffffff;
+  --map-block: #d3d7cb;
+  --map-park: #c9dcc0;
+  --map-label: #5e6158;
+  --map-btn: rgb(255 255 255 / 0.93);
+  --shadow-frame: 0 24px 60px rgb(0 0 0 / 0.35);
 
   --font-serif: var(--font-literata), Georgia, serif;
   --font-sans: var(--font-commissioner), system-ui, sans-serif;

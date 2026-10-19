@@ -4,7 +4,7 @@ import { SubActions, SubPicked } from "./SubCoupon";
 
 export function Sub() {
   return (
-    <section className={`sec light ${styles.joined}`} id="k-sub" aria-labelledby="k-sub-h">
+    <section className="sec" id="k-sub" aria-labelledby="k-sub-h">
       <div className="wrap">
         <div className={styles.coupon}>
           <div className={styles.main}>
