@@ -2,6 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { connection } from "next/server";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import {
+  OPEN_GRAPH,
+  SITE_DESCRIPTION,
+  SITE_INDEXING,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 import { caveat, commissioner, literata, prata } from "./fonts";
 import "./globals.css";
 
@@ -9,8 +17,12 @@ import "./globals.css";
 export const instant = false;
 
 export const metadata: Metadata = {
-  title: "Кварта, обжарка кофе в Минске",
-  description: "Маленькая мастерская в Минске. Обжариваем по четвергам, у вас зерно на 1–3 день.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_TITLE, template: `%s · ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  robots: { index: SITE_INDEXING, follow: SITE_INDEXING },
+  openGraph: OPEN_GRAPH,
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

@@ -107,7 +107,7 @@ export function roastWeek(now: MinskNow): RoastWeek {
   return { days, roast, ship, note };
 }
 
-function hoursOf(dow: number) {
+export function hoursOf(dow: number) {
   return dow >= 5 ? HOURS[1] : HOURS[0];
 }
 
