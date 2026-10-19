@@ -69,9 +69,10 @@
   --shadow-frame: 0 24px 60px rgb(0 0 0 / 0.35);
 
   --font-serif: var(--font-literata), Georgia, serif;
+  --font-serif-italic: var(--font-literata-italic), Georgia, serif;
   --font-sans: var(--font-commissioner), system-ui, sans-serif;
   --font-hand: var(--font-caveat), cursive;
-  --font-stamp: var(--font-prata), serif;
+  --font-stamp: var(--font-serif-italic);
 
   --gap-heading: clamp(20px, 2.6vw, 32px);
   --header-h: 60px;

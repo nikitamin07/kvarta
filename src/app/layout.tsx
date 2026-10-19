@@ -10,7 +10,7 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/site";
-import { caveat, commissioner, literata, prata } from "./fonts";
+import { caveat, commissioner, literata, literataItalic } from "./fonts";
 import "./globals.css";
 
 // nonce в csp требует рендера на запрос
@@ -30,7 +30,7 @@ export const viewport: Viewport = {
   themeColor: "#131c18",
 };
 
-const fontVars = [literata, commissioner, caveat, prata].map((f) => f.variable).join(" ");
+const fontVars = [literata, literataItalic, commissioner, caveat].map((f) => f.variable).join(" ");
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   await connection();

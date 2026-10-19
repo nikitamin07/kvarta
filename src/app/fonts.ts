@@ -1,33 +1,36 @@
-import { Caveat, Commissioner, Literata, Prata } from "next/font/google";
+import localFont from "next/font/local";
 
-export const literata = Literata({
-  subsets: ["latin", "cyrillic"],
-  weight: "variable",
-  axes: ["opsz"],
-  style: ["normal", "italic"],
+// урезаны скриптом scripts/subset-fonts.py
+export const literata = localFont({
+  src: "../assets/fonts/literata.woff2",
+  weight: "400 600",
   variable: "--font-literata",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-export const commissioner = Commissioner({
-  subsets: ["latin", "cyrillic"],
-  weight: "variable",
-  variable: "--font-commissioner",
+export const literataItalic = localFont({
+  src: "../assets/fonts/literata-italic.woff2",
+  weight: "400",
+  style: "italic",
+  variable: "--font-literata-italic",
   display: "swap",
+  preload: false,
+  adjustFontFallback: "Times New Roman",
 });
 
-export const caveat = Caveat({
-  subsets: ["latin", "cyrillic"],
-  weight: "variable",
-  variable: "--font-caveat",
+export const commissioner = localFont({
+  src: "../assets/fonts/commissioner.woff2",
+  weight: "400 600",
+  variable: "--font-commissioner",
   display: "swap",
   preload: false,
 });
 
-export const prata = Prata({
-  subsets: ["latin", "cyrillic"],
-  weight: "400",
-  variable: "--font-prata",
+export const caveat = localFont({
+  src: "../assets/fonts/caveat.woff2",
+  weight: "500",
+  variable: "--font-caveat",
   display: "swap",
   preload: false,
 });

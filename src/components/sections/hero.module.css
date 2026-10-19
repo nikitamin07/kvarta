@@ -125,6 +125,7 @@
   background: var(--stamp-bg);
   color: var(--accent);
   font-family: var(--font-stamp);
+  font-style: italic;
   text-align: center;
   rotate: -12deg;
 }
@@ -153,7 +154,7 @@
 }
 
 .note :global(.hand) {
-  max-width: 14ch;
+  max-width: 14.5ch;
   font-size: clamp(19px, 4.6cqw, 24px);
 }
 
@@ -191,7 +192,7 @@
 
   .hero h1 {
     width: auto;
-    max-width: 14ch;
+    max-width: 14.5ch;
     font-size: clamp(38px, 5.6vw, 72px);
     text-wrap: wrap;
   }
@@ -253,7 +254,7 @@
   }
 
   .stamp > span {
-    font-size: clamp(12px, 2.85cqw, 15px);
+    font-size: clamp(12px, 3cqw, 16px);
   }
 
   .note {

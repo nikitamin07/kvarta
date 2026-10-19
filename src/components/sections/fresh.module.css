@@ -85,7 +85,7 @@
 
 .bad > span {
   color: var(--error);
-  font-family: var(--font-serif);
+  font-family: var(--font-serif-italic);
   font-size: 17px;
   font-style: italic;
 }

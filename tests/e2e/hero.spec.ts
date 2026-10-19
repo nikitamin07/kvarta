@@ -59,6 +59,9 @@ test.describe("анимация при прокрутке", () => {
 
 test("якорные ссылки прокручивают плавно", async ({ page }) => {
   await page.goto("/");
+  // подмена шрифта двигает цель прокрутки
+  await page.waitForFunction(() => localStorage.getItem("kvarta-source"));
+  await page.evaluate(() => document.fonts.ready);
   await page.getByRole("link", { name: "Собрать заказ" }).click();
   await page.waitForTimeout(80);
   const mid = await page.evaluate(() => scrollY);
