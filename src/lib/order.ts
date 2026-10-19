@@ -33,12 +33,21 @@ export function lineLabel(line: OrderLine): string {
   return line.qty > 1 ? `${line.product.short} × ${line.qty}` : line.product.short;
 }
 
-export function putSub(subs: readonly ProductId[], id: ProductId): ProductId[] {
-  return [...subs, id].slice(-SUBSCRIPTION.packs);
+export type SubSlots = (ProductId | null)[];
+
+export const EMPTY_SLOTS: SubSlots = Array.from({ length: SUBSCRIPTION.packs }, () => null);
+
+export function toSlots(subs: readonly ProductId[]): SubSlots {
+  return EMPTY_SLOTS.map((_, i) => subs[i] ?? null);
 }
 
-export function dropSub(subs: readonly ProductId[], index: number): ProductId[] {
-  return subs.filter((_, i) => i !== index);
+export function putSub(slots: SubSlots, id: ProductId): SubSlots {
+  const free = slots.indexOf(null);
+  return free < 0 ? slots : slots.map((s, i) => (i === free ? id : s));
+}
+
+export function dropSub(slots: SubSlots, index: number): SubSlots {
+  return slots.map((s, i) => (i === index ? null : s));
 }
 
 export function subsLabel(subs: readonly ProductId[]): string {

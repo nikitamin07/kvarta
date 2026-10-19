@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { plural } from "./format";
-import { clampQty, deliveryNote, dropSub, lineLabel, priceOrder, putSub, subsLabel } from "./order";
+import {
+  EMPTY_SLOTS,
+  clampQty,
+  deliveryNote,
+  dropSub,
+  lineLabel,
+  priceOrder,
+  putSub,
+  subsLabel,
+  toSlots,
+} from "./order";
 
 describe("priceOrder", () => {
   it("считает сумму по ценам каталога в порядке каталога", () => {
@@ -71,16 +81,22 @@ describe("plural", () => {
 });
 
 describe("пара подписки", () => {
-  it("putSub добавляет пачку, третья вытесняет первую", () => {
-    expect(putSub([], "eth")).toEqual(["eth"]);
-    expect(putSub(["eth"], "eth")).toEqual(["eth", "eth"]);
-    expect(putSub(["eth", "col"], "bra")).toEqual(["col", "bra"]);
+  it("putSub кладёт пачку в первый пустой слот, в полную пару не кладёт", () => {
+    expect(putSub(EMPTY_SLOTS, "eth")).toEqual(["eth", null]);
+    expect(putSub(["eth", null], "eth")).toEqual(["eth", "eth"]);
+    expect(putSub([null, "col"], "bra")).toEqual(["bra", "col"]);
+    expect(putSub(["eth", "col"], "bra")).toEqual(["eth", "col"]);
   });
 
-  it("dropSub убирает пачку по месту, а не по сорту", () => {
-    expect(dropSub(["eth", "eth"], 1)).toEqual(["eth"]);
-    expect(dropSub(["eth", "col"], 0)).toEqual(["col"]);
-    expect(dropSub(["eth"], 1)).toEqual(["eth"]);
+  it("dropSub освобождает слот на месте, соседний не сдвигается", () => {
+    expect(dropSub(["eth", "col"], 0)).toEqual([null, "col"]);
+    expect(dropSub(["eth", "eth"], 1)).toEqual(["eth", null]);
+  });
+
+  it("toSlots раскладывает список сортов по слотам", () => {
+    expect(toSlots([])).toEqual([null, null]);
+    expect(toSlots(["bra"])).toEqual(["bra", null]);
+    expect(toSlots(["eth", "col"])).toEqual(["eth", "col"]);
   });
 
   it("subsLabel склеивает разные сорта и считает одинаковые", () => {

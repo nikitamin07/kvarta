@@ -16,6 +16,11 @@ test("пара собирается мышью и уходит в форму", a
   await eth.click();
   await eth.click();
   await expect(dialog).toContainText("Пара собрана: Эфиопия × 2");
+  const col = dialog.getByRole("button", { name: /^Колумбия Уила/ });
+  await expect(col).toHaveAttribute("aria-disabled", "true");
+  await col.click({ force: true });
+  await expect(dialog.locator("[data-shake]")).toHaveCount(1);
+  await expect(dialog).toContainText("Пара собрана: Эфиопия × 2");
   await expectNoHorizontalScroll(page);
   await expectNoA11yViolations(page);
 

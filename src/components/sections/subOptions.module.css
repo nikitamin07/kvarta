@@ -1,0 +1,126 @@
+.opts {
+  display: grid;
+  gap: 8px;
+}
+
+.opt {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2px 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--paper-line);
+  border-radius: 12px;
+  background: var(--paper-field);
+  color: var(--paper-ink);
+  font: 400 15px var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.opt:not([data-count="0"]) {
+  border-color: var(--paper-ink);
+}
+
+.opt b {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.notes {
+  color: var(--paper-muted);
+}
+
+.marks {
+  display: flex;
+  grid-row: span 2;
+  transition: scale 0.15s;
+}
+
+.marks i {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper-ink);
+  color: var(--paper);
+  transition:
+    background 0.15s,
+    color 0.15s,
+    width 0.25s,
+    margin 0.25s,
+    opacity 0.25s,
+    scale 0.25s;
+}
+
+.marks i::before,
+.marks i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  mask: url("../../assets/check.svg") center / 14px no-repeat;
+  transition:
+    opacity 0.2s,
+    rotate 0.2s,
+    scale 0.2s;
+}
+
+.marks i::before {
+  mask-image: url("../../assets/plus.svg");
+}
+
+.marks i:first-child {
+  width: 0;
+  opacity: 0;
+  scale: 0;
+}
+
+.opt[data-count="2"] .marks i:first-child {
+  width: 36px;
+  margin-right: 6px;
+  opacity: 1;
+  scale: 1;
+}
+
+.marks i:first-child::before,
+.marks i:last-child::after,
+.opt:not([data-count="0"]) .marks i:last-child::before {
+  opacity: 0;
+  rotate: 90deg;
+  scale: 0.4;
+}
+
+.opt:not([data-count="0"]) .marks i:last-child::after {
+  opacity: 1;
+  rotate: 0deg;
+  scale: 1;
+}
+
+.opt:hover .marks {
+  scale: 1.08;
+}
+
+.opt:active .marks {
+  scale: 0.9;
+}
+
+.opt[aria-disabled="true"] {
+  border-style: dashed;
+  border-color: var(--paper-dash);
+  background: transparent;
+  color: var(--paper-muted);
+  cursor: not-allowed;
+}
+
+.opt[aria-disabled="true"] .marks {
+  scale: 1;
+}
+
+.opt[aria-disabled="true"] .marks i {
+  background: var(--paper-wash);
+  color: var(--paper-muted);
+}

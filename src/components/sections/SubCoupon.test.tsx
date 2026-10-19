@@ -63,17 +63,41 @@ describe("подписка", () => {
     expect(screen.getByRole("button", { name: "Изменить пачки" })).toBeTruthy();
   });
 
-  it("третий сорт вытесняет первый, слот убирает свою пачку", () => {
+  it("отмечает сорта галочками, по одной на пачку", () => {
     const { dialog, put } = setup();
+    const eth = within(dialog).getByRole("button", { name: /^Эфиопия Иргачеффе/ });
+    expect(eth.dataset.count).toBe("0");
+    put("Эфиопия Иргачеффе");
+    expect(eth.dataset.count).toBe("1");
+    put("Эфиопия Иргачеффе");
+    expect(eth.dataset.count).toBe("2");
+  });
+
+  it("при полной паре остальные сорта недоступны, клик встряхивает подсказки", () => {
+    const { dialog, put } = setup();
+    const opt = (name: string) =>
+      within(dialog).getByRole("button", { name: new RegExp(`^${name}`) });
+    const shake = () => dialog.querySelector("[data-shake]")?.getAttribute("data-shake");
     put("Эфиопия Иргачеффе");
     put("Бразилия Серрадо");
-    put("Колумбия Уила");
-    expect(within(dialog).getByText("Пара собрана: Бразилия + Колумбия")).toBeTruthy();
+    expect(opt("Колумбия Уила").getAttribute("aria-disabled")).toBe("true");
+    expect(opt("Эфиопия Иргачеффе").getAttribute("aria-disabled")).toBe("false");
+    expect(shake()).toBeUndefined();
 
-    fireEvent.click(within(dialog).getByRole("button", { name: /^Колумбия.*убрать$/ }));
+    put("Колумбия Уила");
+    expect(within(dialog).getByText("Пара собрана: Эфиопия + Бразилия")).toBeTruthy();
+    const first = shake();
+    expect(first).toBeTruthy();
+    put("Эфиопия Иргачеффе");
+    expect(within(dialog).getByText("Пара собрана: Эфиопия + Бразилия")).toBeTruthy();
+    expect(shake()).not.toBe(first);
+
+    fireEvent.click(within(dialog).getByRole("button", { name: /^Бразилия.*убрать$/ }));
     expect(within(dialog).getByText("Осталось выбрать 1")).toBeTruthy();
     expect(within(dialog).getByText("пока пустая")).toBeTruthy();
-    expect(document.activeElement?.textContent).toMatch(/^Эфиопия Иргачеффе/);
+    expect(shake()).toBeUndefined();
+    expect(opt("Колумбия Уила").getAttribute("aria-disabled")).toBe("false");
+    expect(document.activeElement).toBe(opt("Эфиопия Иргачеффе"));
   });
 
   it("анимирует только изменённые слоты и забывает их при закрытии", () => {
@@ -84,11 +108,26 @@ describe("подписка", () => {
     expect(anims()).toEqual(["Эфиопия2"]);
     put("Бразилия Серрадо");
     expect(anims()).toEqual(["Бразилия"]);
-    put("Колумбия Уила");
-    expect(anims()).toEqual(["Бразилия", "Колумбия"]);
+    fireEvent.click(within(dialog).getByRole("button", { name: /^Эфиопия.*убрать$/ }));
+    expect(anims()).toEqual(["Пачка 1п"]);
 
     fireEvent(dialog, new Event("close"));
     expect(anims()).toEqual([]);
+  });
+
+  it("убранная пачка оставляет слот пустым, соседняя не сдвигается", () => {
+    const { dialog, put } = setup();
+    put("Эфиопия Иргачеффе");
+    put("Бразилия Серрадо");
+    const row = within(dialog).getByRole("button", { name: /^Бразилия.*убрать$/ }).parentElement!;
+    const slots = () => Array.from(row.children, (el) => el.textContent?.slice(0, 7));
+    fireEvent.click(within(dialog).getByRole("button", { name: /^Эфиопия.*убрать$/ }));
+    expect(slots()).toEqual(["Пачка 1", "Бразили"]);
+    expect(screen.getByRole("list", { name: "Выбранные пачки" }).textContent).toBe("Бразилия");
+
+    put("Колумбия Уила");
+    expect(slots()).toEqual(["Колумби", "Бразили"]);
+    expect(within(dialog).getByText("Пара собрана: Колумбия + Бразилия")).toBeTruthy();
   });
 
   it("ссылка ведёт в форму на подписку", () => {

@@ -175,87 +175,75 @@
   }
 }
 
-.filled b {
+.slot small {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.filled {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  place-items: center;
+  justify-content: normal;
+}
+
+.pack {
+  display: grid;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.pack b {
+  color: var(--paper);
   font-family: var(--font-serif);
   font-size: 22px;
   font-weight: 600;
 }
 
-.slot small {
-  margin-top: 2px;
-  font-size: 13px;
-  font-weight: 400;
-  opacity: 0.75;
+.filled small {
+  justify-self: end;
+  margin: 4px -3px -4px 0;
+  text-align: right;
+  color: var(--error);
+  opacity: 1;
 }
 
-.opts {
-  display: grid;
-  gap: 8px;
+.slots[data-shake="a"] .filled small {
+  animation: shake-a 0.4s ease-in-out;
 }
 
-.opt {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 2px 12px;
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid var(--paper-line);
-  border-radius: 12px;
-  background: var(--paper-field);
-  color: var(--paper-ink);
-  font: 400 15px var(--font-sans);
-  text-align: left;
-  cursor: pointer;
-  transition: border-color 0.15s;
+.slots[data-shake="b"] .filled small {
+  animation: shake-b 0.4s ease-in-out;
 }
 
-.opt:hover,
-.opt:focus-visible {
-  border-color: var(--paper-ink);
+.slots[data-shake] .filled ~ .filled small {
+  animation-delay: 0.3s;
 }
 
-.opt b {
-  font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: 600;
+@keyframes shake-a {
+  20%,
+  60% {
+    translate: -5px 0;
+  }
+  40%,
+  80% {
+    translate: 4px 0;
+  }
 }
 
-.opt span {
-  color: var(--paper-muted);
-}
-
-.opt i {
-  display: grid;
-  grid-row: span 2;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--paper-ink);
-  color: var(--paper);
-  transition:
-    background 0.15s,
-    color 0.15s,
-    scale 0.15s;
-}
-
-.opt:hover i,
-.opt:focus-visible i {
-  background: var(--accent);
-  color: var(--accent-ink);
-  scale: 1.08;
-}
-
-.opt:active i {
-  scale: 0.9;
-}
-
-.opt svg {
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
+@keyframes shake-b {
+  20%,
+  60% {
+    translate: -5px 0;
+  }
+  40%,
+  80% {
+    translate: 4px 0;
+  }
 }
 
 .foot {
