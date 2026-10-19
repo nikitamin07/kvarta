@@ -67,6 +67,7 @@
   --map-label: #5e6158;
   --map-btn: rgb(255 255 255 / 0.93);
   --shadow-frame: 0 24px 60px rgb(0 0 0 / 0.35);
+  --deco: rgb(236 232 223 / 0.12);
 
   --font-serif: var(--font-literata), Georgia, serif;
   --font-serif-italic: var(--font-literata-italic), Georgia, serif;
@@ -148,9 +149,15 @@ a:hover {
 
 /* секции вне экрана без раскладки */
 .sec {
+  position: relative;
   padding-block: clamp(48px, 7vw, 96px);
+  overflow-x: clip;
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
+}
+
+.sec > .wrap {
+  position: relative;
 }
 
 /* якорю нужны настоящие высоты */

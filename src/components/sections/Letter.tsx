@@ -1,10 +1,12 @@
 import Image from "next/image";
 import tools from "@/assets/tools.jpg";
 import styles from "./letter.module.css";
+import { Deco } from "@/components/ui/Deco";
 
 export function Letter() {
   return (
     <section className="sec" aria-labelledby="k-letter-h">
+      <Deco kind="bean" side="left" at="middle" />
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.inner}>
           <h2 id="k-letter-h" className={styles.h}>

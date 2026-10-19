@@ -1,5 +1,6 @@
 import { dayParts, type RoastWeek } from "@/lib/schedule";
 import styles from "./week.module.css";
+import { Deco } from "@/components/ui/Deco";
 
 const CIRCLE =
   "M44 6 C 24 10, 6 22, 6 36 C 6 51, 30 59, 50 57 C 70 55, 82 45, 80 30 C 78 16, 60 10, 44 10.5 " +
@@ -12,6 +13,7 @@ const SQUIG =
 export function Week({ week }: { week: RoastWeek }) {
   return (
     <section className="sec light" aria-labelledby="k-week-h">
+      <Deco kind="steam" side="right" />
       <div className="wrap">
         <h2 id="k-week-h">Неделя в мастерской</h2>
         <ol className={styles.cal}>

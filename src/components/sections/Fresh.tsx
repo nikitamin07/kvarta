@@ -1,9 +1,11 @@
 import styles from "./fresh.module.css";
 import { FreshMeter } from "./FreshMeter";
+import { Deco } from "@/components/ui/Deco";
 
 export function Fresh({ today }: { today: string }) {
   return (
     <section className="sec light" aria-labelledby="k-fresh-h">
+      <Deco kind="cup" side="right" at="bottom" />
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.head}>
           <h2 id="k-fresh-h" className={styles.h}>

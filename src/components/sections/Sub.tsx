@@ -1,10 +1,12 @@
 import { SUBSCRIPTION } from "@/lib/catalog";
 import styles from "./sub.module.css";
 import { SubActions, SubPicked } from "./SubCoupon";
+import { Deco } from "@/components/ui/Deco";
 
 export function Sub() {
   return (
     <section className="sec" id="k-sub" aria-labelledby="k-sub-h">
+      <Deco kind="branch" side="left" at="middle" />
       <div className="wrap">
         <div className={styles.coupon}>
           <div className={styles.main}>

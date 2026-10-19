@@ -1,9 +1,11 @@
 import styles from "./build.module.css";
 import { BuildOrder } from "./BuildOrder";
+import { Deco } from "@/components/ui/Deco";
 
 export function Build({ roastDay }: { roastDay: string }) {
   return (
     <section className="sec light" id="k-build" aria-labelledby="k-build-h">
+      <Deco kind="branch" side="right" />
       <div className="wrap">
         <div className={styles.head}>
           <h2 id="k-build-h">Соберите заказ</h2>

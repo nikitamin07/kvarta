@@ -1,0 +1,52 @@
+.deco {
+  position: absolute;
+  width: clamp(220px, 30vw, 440px);
+  height: auto;
+  max-height: 92%;
+  translate: var(--x) var(--y, 0);
+  fill: none;
+  stroke: var(--deco);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.deco * {
+  vector-effect: non-scaling-stroke;
+}
+
+.left {
+  --x: -60%;
+  left: 0;
+  rotate: -8deg;
+}
+
+.right {
+  --x: 60%;
+  right: 0;
+  rotate: 10deg;
+}
+
+.top {
+  top: 4%;
+}
+
+.middle {
+  --y: -50%;
+  top: 50%;
+}
+
+.bottom {
+  bottom: 4%;
+}
+
+@media (min-width: 900px) {
+  .left {
+    --x: -55%;
+  }
+
+  .right {
+    --x: 55%;
+  }
+}

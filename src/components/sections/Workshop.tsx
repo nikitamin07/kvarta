@@ -2,6 +2,7 @@ import { MAPS_URL, ROUTE_URL, SHOP_ADDRESS, SHOP_PHONE } from "@/lib/contacts";
 import type { MinskNow } from "@/lib/schedule";
 import { ShopHours } from "./ShopHours";
 import styles from "./workshop.module.css";
+import { Deco } from "@/components/ui/Deco";
 
 function MapScheme() {
   return (
@@ -40,6 +41,7 @@ function MapScheme() {
 export function Workshop({ now }: { now: MinskNow }) {
   return (
     <section className="sec" id="k-map" aria-labelledby="k-map-h">
+      <Deco kind="bean" side="right" at="bottom" />
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.frame}>
           <div className={styles.frameIn}>

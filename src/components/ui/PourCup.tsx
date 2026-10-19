@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import styles from "./pourCup.module.css";
 
+const CUP_SCALE = "translate(120 208) scale(.84) translate(-120 -208)";
 const CUP = "M74 128 L166 128 L160 186 Q156 200 140 200 L100 200 Q84 200 80 186 Z";
 const TURKA =
   "M-2 -1 L3 1 L36 1 Q40 1 39 5 L33 17 C 41 30, 44 44, 42 54 Q41 60 35 60 L7 60 " +
@@ -64,11 +65,14 @@ export function PourCup({ className }: { className?: string }) {
           <path className={styles.shine} d="M10 26 C 6 36, 6 46, 9 54" />
         </g>
       </g>
-      <path className={styles.stream} d="M118 50 L118 196" />
-      <g transform="translate(120 208) scale(.84) translate(-120 -208)">
+      <g transform={CUP_SCALE}>
         <path className={styles.steam} d="M106 116 C 98 104, 114 96, 106 82" />
         <path className={`${styles.steam} ${styles.s2}`} d="M134 116 C 126 102, 142 94, 134 78" />
         <path className={styles.cupBody} d={CUP} />
+      </g>
+      {/* кофе и пенка поверх струи */}
+      <path className={styles.stream} d="M118 50 L118 196" />
+      <g transform={CUP_SCALE}>
         <g clipPath={`url(#${id}clip)`}>
           <g className={styles.fill}>
             <rect className={styles.coffee} x="40" y="136" width="160" height="80" />
@@ -79,9 +83,9 @@ export function PourCup({ className }: { className?: string }) {
             />
           </g>
         </g>
-        <circle className={`${styles.drop} ${styles.d1}`} cx="112" cy="146" r="3.5" />
-        <circle className={`${styles.drop} ${styles.d2}`} cx="124" cy="146" r="3" />
-        <circle className={`${styles.drop} ${styles.d3}`} cx="118" cy="144" r="2.5" />
+        <circle className={`${styles.drop} ${styles.d1}`} cx="112" cy="192" r="3.5" />
+        <circle className={`${styles.drop} ${styles.d2}`} cx="124" cy="192" r="3" />
+        <circle className={`${styles.drop} ${styles.d3}`} cx="118" cy="186" r="2.5" />
         <path className={styles.line} d={CUP} />
         <path className={styles.line} d="M165 140 C 190 140, 189 170, 162.5 170" />
         <path className={styles.line} d="M46 208 Q 120 226 194 208" />
