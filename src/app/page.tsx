@@ -1,6 +1,8 @@
 import { connection } from "next/server";
 import { Build } from "@/components/sections/Build";
+import { Hero } from "@/components/sections/Hero";
 import { Lead } from "@/components/sections/Lead";
+import { Letter } from "@/components/sections/Letter";
 import { OrderProvider } from "@/context/OrderProvider";
 import { formatDay, minskNow, roastWeek } from "@/lib/schedule";
 
@@ -9,10 +11,9 @@ export default async function Home() {
   const week = roastWeek(minskNow(new Date()));
   return (
     <OrderProvider>
-      <section className="wrap sec" aria-labelledby="k-hero-h">
-        <h1 id="k-hero-h">Жарим кофе так, как хотели бы пить его сами</h1>
-      </section>
+      <Hero roast={week.roast} />
       <Build roastDay={formatDay(week.roast)} />
+      <Letter />
       <Lead />
     </OrderProvider>
   );
