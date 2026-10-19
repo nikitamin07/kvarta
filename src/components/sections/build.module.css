@@ -97,6 +97,13 @@
 
 .receipt h3 {
   font-size: 24px;
+  margin-right: 16px;
+}
+
+.receiptHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
 .receipt .note {
@@ -141,10 +148,17 @@
   font-size: 26px;
 }
 
+.meter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
 .beans {
   display: flex;
   gap: 6px;
-  margin-top: 16px;
 }
 
 .bean {
@@ -180,7 +194,6 @@
 }
 
 .free {
-  margin-top: 8px;
   color: var(--paper-soft);
   font-size: 15px;
 }
@@ -195,6 +208,13 @@
 .receipt .toForm:hover {
   background: var(--paper-ink-hover);
   color: var(--paper);
+}
+
+@media (min-width: 678px) {
+  .grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+  }
 }
 
 @media (min-width: 900px) {

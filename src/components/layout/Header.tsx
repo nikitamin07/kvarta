@@ -1,10 +1,9 @@
 import styles from "./header.module.css";
 
 const NAV = [
-  { href: "#k-build", label: "Зерно" },
+  { href: "#k-build", label: "Разовый заказ" },
   { href: "#k-sub", label: "Подписка" },
-  { href: "#k-map", label: "Мастерская" },
-  { href: "#k-lead", label: "Заявка" },
+  { href: "#k-map", label: "Мы на карте" },
 ];
 
 export function Header() {

@@ -24,7 +24,7 @@ describe("BuildOrder", () => {
   it("начинает с пустого чека", () => {
     const { receipt } = setup();
     expect(within(receipt).getByText(/Пока пусто/)).toBeTruthy();
-    expect(within(receipt).getByText("здесь появится ваш заказ")).toBeTruthy();
+    expect(within(receipt).getByText("жарим в четверг, 22 октября")).toBeTruthy();
     expect(within(receipt).getByText("0 BYN")).toBeTruthy();
     expect(within(receipt).getByText("Доставка бесплатно от 50 BYN")).toBeTruthy();
     expect(within(receipt).queryByRole("list")).toBeNull();

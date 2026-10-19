@@ -29,10 +29,10 @@ export function BuildOrder({ roastDay }: { roastDay: string }) {
         ))}
       </div>
       <aside className={styles.receipt} aria-label="Ваш заказ">
-        <h3>Ваш заказ</h3>
-        <p className={`hand ${styles.note}`}>
-          {lines.length ? `жарим в четверг, ${roastDay}` : "здесь появится ваш заказ"}
-        </p>
+        <div className={styles.receiptHead}>
+          <h3>Ваш заказ</h3>
+          <p className={`hand ${styles.note}`}>жарим в четверг, {roastDay}</p>
+        </div>
         {lines.length ? (
           <ul className={styles.lines}>
             {lines.map((l) => (
@@ -50,15 +50,17 @@ export function BuildOrder({ roastDay }: { roastDay: string }) {
           <span>Итого</span>
           <span>{total} BYN</span>
         </div>
-        <div className={styles.beans} aria-hidden="true">
-          {BEANS.map((i) => (
-            <span
-              key={i}
-              className={total >= i * 10 ? `${styles.bean} ${styles.full}` : styles.bean}
-            />
-          ))}
+        <div className={styles.meter}>
+          <div className={styles.beans} aria-hidden="true">
+            {BEANS.map((i) => (
+              <span
+                key={i}
+                className={total >= i * 10 ? `${styles.bean} ${styles.full}` : styles.bean}
+              />
+            ))}
+          </div>
+          <p className={styles.free}>{deliveryNote(total)}</p>
         </div>
-        <p className={styles.free}>{deliveryNote(total)}</p>
         <a className={`btn ${styles.toForm}`} href="#k-lead" onClick={toForm}>
           Перенести в заявку
         </a>

@@ -15,9 +15,9 @@
 
 @media (min-width: 900px) {
   .grid {
-    grid-template-columns: 1fr 1.3fr;
+    grid-template-columns: 1fr 1.45fr;
     align-items: start;
-    gap: 64px;
+    gap: 58px;
   }
 
   .lede {
