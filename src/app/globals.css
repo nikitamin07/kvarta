@@ -146,8 +146,22 @@ a:hover {
   padding-inline: clamp(16px, 4vw, 40px);
 }
 
+/* секции вне экрана без раскладки */
 .sec {
   padding-block: clamp(48px, 7vw, 96px);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* якорю нужны настоящие высоты */
+html:has(:target) .sec,
+html[data-anchor] .sec {
+  content-visibility: visible;
+}
+
+/* мгновенно, чтобы держала привязка прокрутки */
+html[data-anchor] {
+  scroll-behavior: auto;
 }
 
 .light {
