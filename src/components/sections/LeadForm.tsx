@@ -10,7 +10,8 @@ import { NAME_MAX, TEXT_MAX, validateLead, type FieldErrors, type LeadSource } f
 import { lineLabel, priceOrder } from "@/lib/order";
 import { formatPhone, PHONE_HINT } from "@/lib/phone";
 import styles from "./leadForm.module.css";
-import { LeadChoice } from "./LeadChoice";
+import { LeadChoice, slide } from "./LeadChoice";
+import { useSlideHeight } from "./useSlideHeight";
 
 type Message = { ok: boolean; text: string; call?: boolean };
 
@@ -59,6 +60,11 @@ export function LeadForm() {
         : interest === "question" && !question.trim()
           ? "Напишите вопрос, чтобы менеджер подготовился к звонку"
           : "";
+
+  // ошибки и сообщения тоже двигают высоту
+  const stepsRef = useSlideHeight<HTMLDivElement>(
+    [step, tried && stepError, message?.text, errors.name?.[0], errors.phone?.[0]].join("|"),
+  );
 
   const subsText = subs.map((id) => findProduct(id)!.short).join(" + ");
   const summary =
@@ -141,7 +147,6 @@ export function LeadForm() {
     }
   }
 
-  const fold = (open: boolean) => ({ className: styles.fold, "data-open": open, inert: !open });
   const phoneBad = !!errors.phone;
 
   return (
@@ -152,8 +157,8 @@ export function LeadForm() {
       </div>
       <p className={styles.stepL}>Шаг {step} из 2</p>
 
-      <div>
-        <div {...fold(step === 1)}>
+      <div ref={stepsRef} className={styles.slides}>
+        <div {...slide(0, step - 1)}>
           <div className={styles.foldIn}>
             <LeadChoice
               total={total}
@@ -167,7 +172,7 @@ export function LeadForm() {
           </div>
         </div>
 
-        <div {...fold(step === 2)}>
+        <div {...slide(1, step - 1)}>
           <div className={styles.foldIn}>
             <p className={styles.note}>{summary}</p>
             <div className={styles.field}>

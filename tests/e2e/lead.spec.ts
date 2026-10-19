@@ -131,3 +131,77 @@ test("неактивный шаг не попадает в порядок таб
   await expect(form(page).getByLabel("Ваше имя")).not.toBeFocused();
   await expect(form(page).getByLabel("Ваше имя")).toBeHidden();
 });
+
+test("блоки формы стоят в ряд и уезжают вбок", async ({ page }) => {
+  await page.goto("/#k-lead");
+  // форма ожила после гидратации
+  await page.waitForFunction(() => localStorage.getItem("kvarta-source"));
+  const f = form(page);
+  const panel = (label: string) => f.locator("[data-pos]", { has: page.getByLabel(label) }).last();
+  const shiftX = (loc: ReturnType<typeof panel>) =>
+    loc.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);
+  const order = f
+    .locator("[data-pos]", {
+      has: page.getByRole("button", { name: "Добавить Эфиопия Иргачеффе", includeHidden: true }),
+    })
+    .last();
+  const question = panel("Ваш вопрос");
+
+  expect(await shiftX(question)).toBeGreaterThan(0);
+  await f.getByRole("button", { name: "Вопрос" }).click();
+  await expect.poll(() => shiftX(order)).toBeLessThan(0);
+  await expect.poll(() => shiftX(question)).toBe(0);
+
+  await f.getByRole("button", { name: "Подписка" }).click();
+  await expect.poll(() => shiftX(question)).toBeGreaterThan(0);
+
+  await f.getByRole("button", { name: "Разовый заказ" }).click();
+  await f.getByRole("button", { name: "Добавить Бразилия Серрадо" }).click();
+  await f.getByRole("button", { name: "Дальше" }).click();
+  await expect.poll(() => shiftX(panel("Ваше имя"))).toBe(0);
+  await expect.poll(() => shiftX(f.locator("[data-pos]").first())).toBeLessThan(0);
+});
+
+const heights = (page: Page) =>
+  page.evaluate(async () => {
+    const f = document.querySelector("#k-lead form")!;
+    const h: number[] = [];
+    for (let i = 0; i < 14; i++) {
+      h.push(Math.round(f.getBoundingClientRect().height));
+      await new Promise((r) => setTimeout(r, 40));
+    }
+    return h;
+  });
+
+test("высота формы идёт к новой без провала", async ({ page }) => {
+  await page.goto("/#k-lead");
+  await page.waitForFunction(() => localStorage.getItem("kvarta-source"));
+  const f = form(page);
+  for (const [name, dir] of [
+    ["Вопрос", -1],
+    ["Подписка", 1],
+    ["Дальше", 1],
+  ] as const) {
+    const sampled = heights(page);
+    await f.getByRole("button", { name, exact: true }).click();
+    const h = await sampled;
+    const steps = h.slice(1).map((v, i) => (v - h[i]) * dir);
+    expect(
+      steps.every((d) => d >= -1),
+      `${name} ${h.join(" ")}`,
+    ).toBe(true);
+    expect((h.at(-1)! - h[0]) * dir).toBeGreaterThan(0);
+  }
+});
+
+test("при reduced motion высота формы не анимируется", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/#k-lead");
+  await page.waitForFunction(() => localStorage.getItem("kvarta-source"));
+  await form(page).getByRole("button", { name: "Вопрос" }).click();
+  const inline = await form(page)
+    .locator("[data-pos]")
+    .nth(1)
+    .evaluate((el) => (el.parentElement as HTMLElement).style.height);
+  expect(inline).toBe("");
+});

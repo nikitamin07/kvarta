@@ -8,6 +8,13 @@ const fetchMock = vi.fn<typeof fetch>();
 
 beforeEach(() => {
   vi.stubGlobal("fetch", fetchMock);
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      observe() {}
+      disconnect() {}
+    },
+  );
   localStorage.clear();
 });
 

@@ -7,36 +7,53 @@
   background: var(--bg);
 }
 
+/* блоки стоят в ряд */
+/* запас под рамку фокуса */
+.slides {
+  position: relative;
+  margin: -6px;
+  padding: 6px;
+  overflow: hidden;
+  transition: height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* неактивный блок вне потока */
 .fold {
-  display: grid;
-  grid-template-rows: 0fr;
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  left: 6px;
   opacity: 0;
   visibility: hidden;
   transition:
-    grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.25s,
-    visibility 0.4s;
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s,
+    visibility 0.45s;
 }
 
-.fold[data-open="true"] {
-  grid-template-rows: 1fr;
+.fold[data-pos="before"] {
+  transform: translateX(calc(-100% - 24px));
+}
+
+.fold[data-pos="after"] {
+  transform: translateX(calc(100% + 24px));
+}
+
+.fold[data-pos="current"] {
+  position: relative;
+  inset: auto;
   opacity: 1;
   visibility: visible;
   transition:
-    grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.3s 0.12s,
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s 0.1s,
     visibility 0s;
 }
 
-/* запас под рамку фокуса */
 .foldIn {
   display: grid;
   align-content: start;
   gap: 14px;
-  min-height: 0;
-  margin: -6px;
-  padding: 6px;
-  overflow: hidden;
 }
 
 .progress {
@@ -91,7 +108,7 @@
 }
 
 .panel {
-  padding: 2px 12px;
+  padding: 16px 12px;
   border-radius: 16px;
   background: var(--surface);
 }
@@ -100,22 +117,25 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  padding: 10px 0 4px;
+  padding-bottom: 4px;
 }
 
 .cell {
   display: grid;
   align-content: space-between;
   gap: 8px;
-  padding: 10px;
+  padding: 12px 10px;
   border-radius: 12px;
   background: var(--bg);
+  container-type: inline-size;
 }
 
 .cell b {
   display: block;
   font-size: 16px;
   font-weight: 600;
+  line-height: 100%;
+  margin-bottom: 4px;
 }
 
 .rs {
@@ -132,7 +152,7 @@
 .sum {
   display: grid;
   gap: 2px;
-  padding: 8px 0 4px;
+  padding-top: 8px;
   font-family: var(--font-serif);
   font-size: 20px;
 }
@@ -152,9 +172,12 @@
   border-bottom: 1px solid var(--line);
   cursor: pointer;
 }
-
+.check:first-child {
+  padding-top: 0;
+}
 .check:last-child {
   border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .check input {
@@ -278,5 +301,36 @@ textarea.inp {
     justify-content: space-between;
     align-items: baseline;
     gap: 12px;
+  }
+}
+@media (min-width: 576px) {
+  .cells {
+    gap: 12px;
+  }
+  .cell {
+    padding: 16px;
+  }
+  .panel {
+    padding: 16px;
+  }
+  .cards {
+    gap: 10px;
+  }
+}
+/* счётчик не влезает в ячейку */
+@container (max-width: 129.98px) {
+  .cell .cellStep {
+    gap: 0;
+    padding: 2px;
+  }
+
+  .cell .cellStep button {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .cell .cellStep output {
+    min-width: 20px;
   }
 }

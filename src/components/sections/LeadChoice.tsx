@@ -7,6 +7,7 @@ import { CATALOG, SUBSCRIPTION_IDS, findProduct, type ProductId } from "@/lib/ca
 import { TEXT_MAX, type Interest } from "@/lib/lead";
 import { deliveryNote } from "@/lib/order";
 import styles from "./leadForm.module.css";
+import { useSlideHeight } from "./useSlideHeight";
 
 const INTERESTS: { id: Interest; label: string }[] = [
   { id: "order", label: "Разовый заказ" },
@@ -26,6 +27,14 @@ type Props = {
   pickedRef: Ref<HTMLButtonElement>;
 };
 
+export function slide(index: number, active: number) {
+  return {
+    className: styles.fold,
+    "data-pos": index < active ? "before" : index > active ? "after" : "current",
+    inert: index !== active,
+  };
+}
+
 function toggle(subs: ProductId[], id: ProductId): ProductId[] {
   return subs.includes(id) ? subs.filter((s) => s !== id) : [...subs, id].slice(-2);
 }
@@ -41,11 +50,13 @@ export function LeadChoice({
 }: Props) {
   const { qty, changeQty, subs, setSubs, interest, setInterest } = useOrder();
   const picked = new Set(subs);
-  const fold = (id: Interest) => ({
-    className: styles.fold,
-    "data-open": interest === id,
-    inert: interest !== id,
-  });
+  const active = INTERESTS.findIndex((o) => o.id === interest);
+  const optionsRef = useSlideHeight<HTMLDivElement>(interest);
+  const fold = (id: Interest) =>
+    slide(
+      INTERESTS.findIndex((o) => o.id === id),
+      active,
+    );
 
   return (
     <>
@@ -67,7 +78,7 @@ export function LeadChoice({
         ))}
       </div>
 
-      <div>
+      <div ref={optionsRef} className={styles.slides}>
         <div {...fold("order")}>
           <div className={styles.foldIn}>
             <div className={styles.panel}>
