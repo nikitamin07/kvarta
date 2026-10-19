@@ -51,6 +51,14 @@
   --shadow-paper: 0 18px 40px rgb(0 0 0 / 0.3);
   --shadow-lift: 0 26px 50px rgb(0 0 0 / 0.45);
   --stamp-bg: rgb(19 28 24 / 0.85);
+  --accent-ink-line: rgb(26 23 18 / 0.4);
+  --overlay: rgb(8 12 10 / 0.72);
+  --shadow-modal: 0 30px 80px rgb(0 0 0 / 0.5);
+  --tape-strong: rgb(224 180 122 / 0.7);
+  --paper-line: rgb(37 34 28 / 0.2);
+  --paper-dash: rgb(37 34 28 / 0.35);
+  --paper-wash: rgb(37 34 28 / 0.08);
+  --paper-wash-strong: rgb(37 34 28 / 0.15);
 
   --font-serif: var(--font-literata), Georgia, serif;
   --font-sans: var(--font-commissioner), system-ui, sans-serif;
@@ -72,6 +80,11 @@
 html {
   scroll-padding-top: calc(var(--header-h) + 12px);
   scroll-behavior: smooth;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
 }
 
 body {

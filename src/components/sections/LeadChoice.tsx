@@ -3,7 +3,7 @@
 import type { Ref } from "react";
 import { Stepper } from "@/components/ui/Stepper";
 import { useOrder } from "@/context/OrderProvider";
-import { CATALOG, SUBSCRIPTION_IDS, findProduct, type ProductId } from "@/lib/catalog";
+import { CATALOG, SUBSCRIPTION_PRODUCTS, type ProductId } from "@/lib/catalog";
 import { TEXT_MAX, type Interest } from "@/lib/lead";
 import { deliveryNote } from "@/lib/order";
 import styles from "./leadForm.module.css";
@@ -14,8 +14,6 @@ const INTERESTS: { id: Interest; label: string }[] = [
   { id: "subscription", label: "Подписка" },
   { id: "question", label: "Вопрос" },
 ];
-
-const SUB_PRODUCTS = SUBSCRIPTION_IDS.map((id) => findProduct(id)!);
 
 type Props = {
   total: number;
@@ -111,7 +109,7 @@ export function LeadChoice({
         <div {...fold("subscription")}>
           <div className={styles.foldIn}>
             <div className={styles.panel}>
-              {SUB_PRODUCTS.map((p) => {
+              {SUBSCRIPTION_PRODUCTS.map((p) => {
                 const on = picked.has(p.id);
                 const off = !on && picked.size >= 2;
                 return (

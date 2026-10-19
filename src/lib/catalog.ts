@@ -46,6 +46,7 @@ export const CATALOG: readonly Product[] = [
 
 export const SUBSCRIPTION = { price: 54, packs: 2 } as const;
 export const SUBSCRIPTION_IDS: readonly ProductId[] = ["eth", "col", "bra"];
+export const SUBSCRIPTION_PRODUCTS = CATALOG.filter((p) => SUBSCRIPTION_IDS.includes(p.id));
 export const FREE_DELIVERY_FROM = 50;
 export const MAX_QTY = 9;
 

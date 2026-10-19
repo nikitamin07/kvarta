@@ -17,7 +17,7 @@ type Order = {
   setInterest: (interest: Interest) => void;
   step: FormStep;
   setStep: (step: FormStep) => void;
-  toForm: () => void;
+  toForm: (interest: Interest) => void;
 };
 
 const EMPTY = Object.fromEntries(CATALOG.map((p) => [p.id, 0])) as Qty;
@@ -33,8 +33,8 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const changeQty = (id: ProductId, delta: number) =>
     setQty((q) => ({ ...q, [id]: clampQty(q[id] + delta) }));
 
-  const toForm = () => {
-    setInterest("order");
+  const toForm = (next: Interest) => {
+    setInterest(next);
     setStep(1);
   };
 

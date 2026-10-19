@@ -61,7 +61,7 @@ export function BuildOrder({ roastDay }: { roastDay: string }) {
           </div>
           <p className={styles.free}>{deliveryNote(total)}</p>
         </div>
-        <a className={`btn ${styles.toForm}`} href="#k-lead" onClick={toForm}>
+        <a className={`btn ${styles.toForm}`} href="#k-lead" onClick={() => toForm("order")}>
           Перенести в заявку
         </a>
       </aside>

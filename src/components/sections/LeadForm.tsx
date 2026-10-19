@@ -4,10 +4,10 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useOrder } from "@/context/OrderProvider";
 import { sendLead, type LeadBody } from "@/lib/api";
 import { captureSource } from "@/lib/attribution";
-import { CATALOG, findProduct } from "@/lib/catalog";
+import { CATALOG } from "@/lib/catalog";
 import { SHOP_PHONE, SHOP_PHONE_DISPLAY } from "@/lib/contacts";
 import { NAME_MAX, TEXT_MAX, validateLead, type FieldErrors, type LeadSource } from "@/lib/lead";
-import { lineLabel, priceOrder } from "@/lib/order";
+import { lineLabel, priceOrder, subsLabel } from "@/lib/order";
 import { formatPhone, PHONE_HINT } from "@/lib/phone";
 import styles from "./leadForm.module.css";
 import { LeadChoice, slide } from "./LeadChoice";
@@ -66,12 +66,11 @@ export function LeadForm() {
     [step, tried && stepError, message?.text, errors.name?.[0], errors.phone?.[0]].join("|"),
   );
 
-  const subsText = subs.map((id) => findProduct(id)!.short).join(" + ");
   const summary =
     interest === "order"
       ? `Заказ: ${lines.map(lineLabel).join(", ")}, ${total} BYN`
       : interest === "subscription"
-        ? `Подписка: ${subs.length === 1 ? `${subsText} × 2` : subsText}`
+        ? `Подписка: ${subsLabel(subs)}`
         : `Вопрос: ${question.slice(0, 80)}`;
 
   function next() {

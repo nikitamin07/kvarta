@@ -1,0 +1,108 @@
+/* продолжает светлую полосу свежести */
+.joined {
+  padding-top: 0;
+}
+
+.coupon {
+  display: grid;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.coupon :focus-visible {
+  outline-color: var(--accent-ink);
+}
+
+.main,
+.side {
+  padding: clamp(24px, 4vw, 48px);
+}
+
+.main h2 {
+  max-width: 15ch;
+}
+
+.main p {
+  max-width: 42ch;
+  margin-top: var(--gap-heading);
+  font-size: 18px;
+}
+
+.picked {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.picked li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--accent-ink);
+  color: var(--paper);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.side {
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  border-top: 2px dashed var(--accent-ink-line);
+}
+
+.price {
+  font-family: var(--font-serif);
+  font-size: clamp(52px, 7vw, 84px);
+  line-height: 1;
+}
+
+.price small {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-sans);
+  font-size: 17px;
+}
+
+.side :global(.btn) {
+  background: var(--accent-ink);
+  color: var(--ink);
+}
+
+.side :global(.btn):hover {
+  background: var(--accent-ink-hover);
+  color: var(--ink);
+}
+
+.link,
+.link:hover {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 44px;
+  color: var(--accent-ink);
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+@media (min-width: 900px) {
+  .coupon {
+    grid-template-columns: 1.5fr 1fr;
+  }
+
+  .side {
+    border-top: 0;
+    border-left: 2px dashed var(--accent-ink-line);
+  }
+
+  .side :global(.btn) {
+    justify-self: start;
+  }
+}

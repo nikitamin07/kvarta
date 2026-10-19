@@ -4,6 +4,7 @@ import { Fresh } from "@/components/sections/Fresh";
 import { Hero } from "@/components/sections/Hero";
 import { Lead } from "@/components/sections/Lead";
 import { Letter } from "@/components/sections/Letter";
+import { Sub } from "@/components/sections/Sub";
 import { Week } from "@/components/sections/Week";
 import { OrderProvider } from "@/context/OrderProvider";
 import { formatDay, minskNow, roastWeek } from "@/lib/schedule";
@@ -18,6 +19,7 @@ export default async function Home() {
       <Build roastDay={formatDay(week.roast)} />
       <Letter />
       <Fresh today={now.iso} />
+      <Sub />
       <Week week={week} />
       <Lead />
     </OrderProvider>

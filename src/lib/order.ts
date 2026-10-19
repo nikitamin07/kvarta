@@ -1,4 +1,12 @@
-import { CATALOG, FREE_DELIVERY_FROM, MAX_QTY, type Product, type ProductId } from "./catalog";
+import {
+  CATALOG,
+  FREE_DELIVERY_FROM,
+  MAX_QTY,
+  SUBSCRIPTION,
+  findProduct,
+  type Product,
+  type ProductId,
+} from "./catalog";
 
 export type OrderItem = { id: ProductId; qty: number };
 export type OrderLine = { product: Product; qty: number; sum: number };
@@ -23,4 +31,17 @@ export function deliveryNote(total: number): string {
 
 export function lineLabel(line: OrderLine): string {
   return line.qty > 1 ? `${line.product.short} × ${line.qty}` : line.product.short;
+}
+
+export function putSub(subs: readonly ProductId[], id: ProductId): ProductId[] {
+  return [...subs, id].slice(-SUBSCRIPTION.packs);
+}
+
+export function dropSub(subs: readonly ProductId[], index: number): ProductId[] {
+  return subs.filter((_, i) => i !== index);
+}
+
+export function subsLabel(subs: readonly ProductId[]): string {
+  const names = subs.map((id) => findProduct(id)!.short);
+  return new Set(names).size === 1 ? `${names[0]} × ${SUBSCRIPTION.packs}` : names.join(" + ");
 }

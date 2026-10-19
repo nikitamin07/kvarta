@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { plural } from "./format";
-import { clampQty, deliveryNote, lineLabel, priceOrder } from "./order";
+import { clampQty, deliveryNote, dropSub, lineLabel, priceOrder, putSub, subsLabel } from "./order";
 
 describe("priceOrder", () => {
   it("считает сумму по ценам каталога в порядке каталога", () => {
@@ -67,5 +67,26 @@ describe("plural", () => {
     [111, "дней"],
   ])("%i %s", (n, word) => {
     expect(plural(n, "день", "дня", "дней")).toBe(word);
+  });
+});
+
+describe("пара подписки", () => {
+  it("putSub добавляет пачку, третья вытесняет первую", () => {
+    expect(putSub([], "eth")).toEqual(["eth"]);
+    expect(putSub(["eth"], "eth")).toEqual(["eth", "eth"]);
+    expect(putSub(["eth", "col"], "bra")).toEqual(["col", "bra"]);
+  });
+
+  it("dropSub убирает пачку по месту, а не по сорту", () => {
+    expect(dropSub(["eth", "eth"], 1)).toEqual(["eth"]);
+    expect(dropSub(["eth", "col"], 0)).toEqual(["col"]);
+    expect(dropSub(["eth"], 1)).toEqual(["eth"]);
+  });
+
+  it("subsLabel склеивает разные сорта и считает одинаковые", () => {
+    expect(subsLabel(["eth", "col"])).toBe("Эфиопия + Колумбия");
+    expect(subsLabel(["bra", "bra"])).toBe("Бразилия × 2");
+    expect(subsLabel(["bra"])).toBe("Бразилия × 2");
+    expect(subsLabel([])).toBe("");
   });
 });
