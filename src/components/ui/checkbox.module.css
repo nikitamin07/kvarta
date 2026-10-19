@@ -1,0 +1,48 @@
+.box {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border: 1.5px solid var(--ink-outline);
+  border-radius: 7px;
+  background: transparent;
+  cursor: inherit;
+  appearance: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent-ink);
+  mask: url("../../assets/check.svg") center / 14px no-repeat;
+  opacity: 0;
+  scale: 0.4;
+  transition:
+    opacity 0.15s,
+    scale 0.2s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+label:hover > .box:enabled {
+  border-color: var(--ink);
+  background: var(--ink-wash);
+}
+
+.box:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+label:hover > .box:checked:enabled {
+  border-color: var(--accent-hover);
+  background: var(--accent-hover);
+}
+
+.box:checked::after {
+  opacity: 1;
+  scale: 1;
+}

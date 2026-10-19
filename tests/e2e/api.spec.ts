@@ -9,7 +9,7 @@ test("POST /api/lead на сборке отвечает 422 по полям и �
   expect(res.headers()["x-content-type-options"]).toBe("nosniff");
   const body = await res.json();
   expect(body.message).toBeTruthy();
-  expect(Object.keys(body.errors).sort()).toEqual(["items", "name", "phone"]);
+  expect(Object.keys(body.errors).sort()).toEqual(["consent", "items", "name", "phone"]);
 });
 
 test("GET /api/lead не поддерживается", async ({ request }) => {

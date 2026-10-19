@@ -12,6 +12,7 @@ const BODY: LeadBody = {
   source: null,
   website: "",
   startedAt: 0,
+  consent: true,
 };
 
 function reply(status: number, body: string) {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SHOP_PHONE, SHOP_PHONE_DISPLAY } from "@/lib/contacts";
 import styles from "./footer.module.css";
 
@@ -9,6 +10,9 @@ export function Footer() {
         <span>
           ул. Короля, 9 · <a href={`tel:${SHOP_PHONE}`}>{SHOP_PHONE_DISPLAY}</a>
         </span>
+        <Link href="/privacy" prefetch={false}>
+          Политика конфиденциальности
+        </Link>
       </div>
     </footer>
   );

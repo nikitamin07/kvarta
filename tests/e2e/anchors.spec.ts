@@ -28,7 +28,7 @@ for (const id of TARGETS) {
     await page.goto("/");
     await page.waitForFunction(() => localStorage.getItem("kvarta-source"));
     await page.evaluate(() => document.fonts.ready);
-    const link = page.locator(`a[href="#${id}"]:visible`).first();
+    const link = page.locator(`a[href$="#${id}"]:visible`).first();
     test.skip(!(await link.count()), `на этой ширине нет видимой ссылки на #${id}`);
     await link.click();
     await expectAligned(page, id);

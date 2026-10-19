@@ -53,7 +53,7 @@ test("пока индексация закрыта, robots и заголовки
 
   const sitemap = await request.get("/sitemap.xml");
   expect(sitemap.status()).toBe(200);
-  expect(await sitemap.text()).toMatch(
-    /<loc>https?:\/\/[^<]+\/<\/loc>\s*<lastmod>\d{4}-\d{2}-\d{2}/,
-  );
+  const xml = await sitemap.text();
+  expect(xml).toMatch(/<loc>https?:\/\/[^<]+\/<\/loc>\s*<lastmod>\d{4}-\d{2}-\d{2}/);
+  expect(xml).toMatch(/<loc>https?:\/\/[^<]+\/privacy<\/loc>/);
 });

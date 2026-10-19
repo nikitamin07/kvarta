@@ -53,6 +53,7 @@ async function send() {
 function fillContacts(phone = "+375 29 123-45-67") {
   type("Ваше имя", "Аня");
   type("Телефон", phone);
+  fireEvent.click(screen.getByRole("checkbox", { name: /согласие/ }));
 }
 
 describe("шаг 1", () => {
@@ -219,5 +220,27 @@ describe("отправка", () => {
     expect(screen.getByRole("button", { name: "Отправляем…" })).toHaveProperty("disabled", true);
     await act(async () => finish(new Response('{"ok":true,"duplicate":false}')));
     expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("согласие", () => {
+  it("без галочки не отправляет, показывает ошибку и ставит фокус на галочку", async () => {
+    setup();
+    toStep2();
+    type("Ваше имя", "Аня");
+    type("Телефон", "+375 29 123-45-67");
+    await send();
+
+    const consent = screen.getByRole("checkbox", { name: /согласие/ });
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(screen.getByText("Отметьте согласие на обработку данных")).toBeTruthy();
+    expect(consent.getAttribute("aria-invalid")).toBe("true");
+    expect(document.activeElement).toBe(consent);
+
+    fireEvent.click(consent);
+    expect(screen.queryByText("Отметьте согласие на обработку данных")).toBeNull();
+    expect(
+      screen.getByRole("link", { name: "политике конфиденциальности" }).getAttribute("href"),
+    ).toBe("/privacy");
   });
 });

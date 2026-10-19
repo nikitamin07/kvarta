@@ -6,6 +6,7 @@ import { useOrder } from "@/context/OrderProvider";
 import { CATALOG, SUBSCRIPTION_PRODUCTS, type ProductId } from "@/lib/catalog";
 import { TEXT_MAX, type Interest } from "@/lib/lead";
 import { deliveryNote } from "@/lib/order";
+import box from "@/components/ui/checkbox.module.css";
 import styles from "./leadForm.module.css";
 import { useSlideHeight } from "./useSlideHeight";
 
@@ -118,6 +119,7 @@ export function LeadChoice({
                     className={off ? `${styles.check} ${styles.dis}` : styles.check}
                   >
                     <input
+                      className={box.box}
                       type="checkbox"
                       checked={on}
                       disabled={off}

@@ -17,7 +17,7 @@ function randomPhone(): string {
   return phone;
 }
 
-const human = () => ({ website: "", startedAt: Date.now() - 10_000 });
+const human = () => ({ website: "", startedAt: Date.now() - 10_000, consent: true });
 
 function post(body: unknown, raw?: string | Uint8Array<ArrayBuffer>) {
   return POST(

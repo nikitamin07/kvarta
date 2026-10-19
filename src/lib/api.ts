@@ -10,6 +10,7 @@ export type LeadBody = {
   subs: ProductId[];
   question: string;
   comment: string;
+  consent: boolean;
   source: LeadSource | null;
   website: string;
   startedAt: number;

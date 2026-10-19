@@ -30,6 +30,10 @@ test("заявка доходит до базы с источником перв
     const opened = await orderToStep2(page);
     await form(page).getByLabel("Ваше имя").fill("Тест e2e");
     await form(page).getByLabel("Телефон").fill(phone);
+
+    await form(page)
+      .getByRole("checkbox", { name: /согласие/ })
+      .check();
     // быстрее 3 с это бот
     await page.waitForTimeout(Math.max(0, 4_000 - (Date.now() - opened)));
     await form(page).getByRole("button", { name: "Отправить заявку" }).click();
@@ -54,6 +58,10 @@ test("на 429 от Vercel видна ошибка с телефоном, дан
   await orderToStep2(page);
   await form(page).getByLabel("Ваше имя").fill("Аня");
   await form(page).getByLabel("Телефон").fill("+375 29 123-45-67");
+
+  await form(page)
+    .getByRole("checkbox", { name: /согласие/ })
+    .check();
   await form(page).getByRole("button", { name: "Отправить заявку" }).click();
 
   const alert = form(page).getByRole("alert");
@@ -79,6 +87,10 @@ test("двойной клик отправляет одну заявку", async
   await orderToStep2(page);
   await form(page).getByLabel("Ваше имя").fill("Аня");
   await form(page).getByLabel("Телефон").fill("+375 29 123-45-67");
+
+  await form(page)
+    .getByRole("checkbox", { name: /согласие/ })
+    .check();
   await form(page).getByRole("button", { name: "Отправить заявку" }).dblclick();
 
   await expect(form(page).getByRole("button", { name: "Заявка отправлена" })).toBeDisabled();
@@ -114,6 +126,11 @@ test("подписку можно оформить с клавиатуры", asy
   await page.keyboard.press("Tab");
   await page.keyboard.type("29 123 45 67");
   await page.keyboard.press("Tab");
+  await page.keyboard.press("Tab");
+  await expect(f.getByRole("checkbox", { name: /согласие/ })).toBeFocused();
+  await page.keyboard.press("Space");
+  await page.keyboard.press("Tab");
+  await expect(f.getByRole("link", { name: "политике конфиденциальности" })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(f.getByRole("button", { name: "Отправить заявку" })).toBeFocused();
   await page.keyboard.press("Enter");

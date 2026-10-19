@@ -6,6 +6,7 @@ const base = {
   phone: "8 029 123-45-67",
   interest: "order",
   items: [{ id: "eth", qty: 1 }],
+  consent: true,
 };
 
 describe("validateLead", () => {
@@ -33,10 +34,19 @@ describe("validateLead", () => {
     expect(r.ok && r.data.items).toEqual([{ id: "col", qty: 3 }]);
   });
 
+  it("без явного согласия заявку не принимает", () => {
+    for (const consent of [undefined, false, "да", 1]) {
+      expect(validateLead({ ...base, consent })).toMatchObject({
+        ok: false,
+        errors: { consent: ["Отметьте согласие на обработку данных"] },
+      });
+    }
+  });
+
   it("собирает все ошибки сразу, по полям", () => {
     const r = validateLead({ name: " ", phone: "+375 30 123-45-67", interest: "order", items: [] });
     expect(r.ok).toBe(false);
-    expect(!r.ok && Object.keys(r.errors).sort()).toEqual(["items", "name", "phone"]);
+    expect(!r.ok && Object.keys(r.errors).sort()).toEqual(["consent", "items", "name", "phone"]);
     expect(!r.ok && r.errors.phone?.[0]).toContain("Такого кода нет");
   });
 

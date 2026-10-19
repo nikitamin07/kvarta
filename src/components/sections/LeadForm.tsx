@@ -9,13 +9,14 @@ import { SHOP_PHONE, SHOP_PHONE_DISPLAY } from "@/lib/contacts";
 import { NAME_MAX, TEXT_MAX, validateLead, type FieldErrors, type LeadSource } from "@/lib/lead";
 import { lineLabel, priceOrder, subsLabel } from "@/lib/order";
 import { formatPhone, PHONE_HINT } from "@/lib/phone";
+import box from "@/components/ui/checkbox.module.css";
 import styles from "./leadForm.module.css";
 import { LeadChoice, slide } from "./LeadChoice";
 import { useSlideHeight } from "./useSlideHeight";
 
 type Message = { ok: boolean; text: string; call?: boolean };
 
-const STEP_FIELDS = ["name", "phone"] as const;
+const STEP_FIELDS = ["name", "phone", "consent"] as const;
 
 export function LeadForm() {
   const { qty, subs, interest, step, setStep } = useOrder();
@@ -23,6 +24,7 @@ export function LeadForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [comment, setComment] = useState("");
+  const [consent, setConsent] = useState(false);
   const [tried, setTried] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [sending, setSending] = useState(false);
@@ -35,6 +37,7 @@ export function LeadForm() {
   const website = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
+  const consentRef = useRef<HTMLInputElement>(null);
   const pickedRef = useRef<HTMLButtonElement>(null);
   const focusAfter = useRef<"name" | "picked" | null>(null);
 
@@ -63,7 +66,14 @@ export function LeadForm() {
 
   // ошибки и сообщения тоже двигают высоту
   const stepsRef = useSlideHeight<HTMLDivElement>(
-    [step, tried && stepError, message?.text, errors.name?.[0], errors.phone?.[0]].join("|"),
+    [
+      step,
+      tried && stepError,
+      message?.text,
+      errors.name?.[0],
+      errors.phone?.[0],
+      errors.consent?.[0],
+    ].join("|"),
   );
 
   const summary =
@@ -91,7 +101,8 @@ export function LeadForm() {
       .filter(([field]) => !(STEP_FIELDS as readonly string[]).includes(field))
       .flatMap(([, texts]) => texts ?? []);
     setMessage(other.length ? { ok: false, text: other.join(". ") } : null);
-    if (found.name || found.phone) (found.name ? nameRef : phoneRef).current?.focus();
+    const first = found.name ? nameRef : found.phone ? phoneRef : found.consent ? consentRef : null;
+    first?.current?.focus();
   }
 
   async function submit(e: FormEvent) {
@@ -105,6 +116,7 @@ export function LeadForm() {
       subs: interest === "subscription" ? subs : [],
       question: interest === "question" ? question : "",
       comment,
+      consent,
       source: source.current,
       website: website.current?.value ?? "",
       startedAt: startedAt.current,
@@ -235,6 +247,33 @@ export function LeadForm() {
                 onChange={(e) => setComment(e.target.value)}
               />
             </div>
+            <div className={styles.field}>
+              <label className={styles.agree}>
+                <input
+                  ref={consentRef}
+                  className={box.box}
+                  type="checkbox"
+                  checked={consent}
+                  aria-invalid={!!errors.consent}
+                  aria-describedby={errors.consent ? "k-consent-err" : undefined}
+                  onChange={(e) => {
+                    setConsent(e.target.checked);
+                    setErrors((prev) => ({ ...prev, consent: undefined }));
+                  }}
+                />
+                <span>
+                  Даю согласие на обработку персональных данных по{" "}
+                  <a href="/privacy" target="_blank">
+                    политике конфиденциальности
+                  </a>
+                </span>
+              </label>
+              {errors.consent && (
+                <span className={`${styles.hint} ${styles.bad}`} id="k-consent-err">
+                  {errors.consent[0]}
+                </span>
+              )}
+            </div>
             <div className={styles.trap} aria-hidden="true">
               <label htmlFor="k-website">Сайт</label>
               <input ref={website} id="k-website" tabIndex={-1} autoComplete="off" />
@@ -261,9 +300,6 @@ export function LeadForm() {
                 Назад
               </button>
             </div>
-            <p className={styles.consent}>
-              Отправляя заявку, вы соглашаетесь на обработку телефона для обратного звонка.
-            </p>
           </div>
         </div>
       </div>

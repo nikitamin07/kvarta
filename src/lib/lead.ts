@@ -18,7 +18,8 @@ export const SOURCE_KEYS = [
 export type SourceKey = (typeof SOURCE_KEYS)[number];
 export type LeadSource = Record<SourceKey, string | null>;
 
-export type LeadField = "name" | "phone" | "interest" | "items" | "subs" | "question" | "comment";
+export type LeadField =
+  "name" | "phone" | "interest" | "items" | "subs" | "question" | "comment" | "consent";
 export type FieldErrors = Partial<Record<LeadField, string[]>>;
 
 export type ValidLead = {
@@ -114,6 +115,8 @@ export function validateLead(
 
   const comment = str(b.comment);
   if (comment.length > TEXT_MAX) add("comment", `Комментарий длиннее ${TEXT_MAX} символов`);
+
+  if (b.consent !== true) add("consent", "Отметьте согласие на обработку данных");
 
   if (Object.keys(errors).length || !interest || !phone.ok) return { ok: false, errors };
   return {

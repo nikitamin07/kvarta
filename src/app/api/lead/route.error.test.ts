@@ -15,6 +15,7 @@ it("сбой базы это 500 с понятным текстом и без д
       body: JSON.stringify({
         website: "",
         startedAt: Date.now() - 10_000,
+        consent: true,
         name: "Аня",
         phone: "+375291234567",
         interest: "question",
